@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/NordSecurity/nordvpn-linux/config"
-	"github.com/NordSecurity/nordvpn-linux/daemon/firewall"
 	"github.com/NordSecurity/nordvpn-linux/daemon/vpn"
 	"github.com/NordSecurity/nordvpn-linux/internal"
 	"github.com/NordSecurity/nordvpn-linux/networker"
@@ -24,16 +23,6 @@ func newEndpointResolverMock(ip netip.Addr) mockEndpointResolver {
 func (g mockEndpointResolver) Resolve(netip.Addr) ([]netip.Addr, error) {
 	return []netip.Addr{g.ip}, nil
 }
-
-type workingFirewall struct{}
-
-func (workingFirewall) Add([]firewall.Rule) error { return nil }
-func (workingFirewall) Delete([]string) error     { return nil }
-func (workingFirewall) Enable() error             { return nil }
-func (workingFirewall) Disable() error            { return nil }
-func (workingFirewall) IsEnabled() bool           { return true }
-
-type UniqueAddress struct{}
 
 func TestConnect(t *testing.T) {
 	category.Set(t, category.Route)
