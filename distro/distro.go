@@ -58,21 +58,6 @@ func ReleaseName() (string, error) {
 	return release.Name, nil
 }
 
-// ReleasePrettyName of the currently running distribution.
-func ReleasePrettyName() (string, error) {
-	data, err := os.ReadFile(osReleaseFile)
-	if err != nil {
-		return "", err
-	}
-
-	var release osRelease
-	if err := (&release).UnmarshalText(data); err != nil {
-		return "", err
-	}
-
-	return release.PrettyName, nil
-}
-
 // KernelName of the currently running kernel.
 func KernelName() string { return uname("-sr") }
 
